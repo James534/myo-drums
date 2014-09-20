@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_html" default="compile.module.html">
+  <dirname property="module.html.basedir" file="${ant.file.module_html}"/>
+  
+  <property name="module.jdk.home.html" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.html" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.html" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.html" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+  
+  <property name="html.output.dir" value="${module.html.basedir}/build/classes/main"/>
+  <property name="html.testoutput.dir" value="${module.html.basedir}/build/classes/test"/>
+  
+  <path id="html.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="html.module.production.classpath">
+    <path refid="${module.jdk.classpath.html}"/>
+    <pathelement location="${core.output.dir}"/>
+    <path refid="library.gradle:_gdx-1.3.1.classpath"/>
+    <path refid="library.gradle:_gdx-box2d-1.3.1.classpath"/>
+    <path refid="library.gradle:_gdx-backend-gwt-1.3.1.classpath"/>
+    <path refid="library.gradle:_gdx-backend-gwt-1.3.1-sources.classpath"/>
+    <path refid="library.gradle:_gdx-1.3.1-sources.classpath"/>
+    <path refid="library.gradle:_gdx-box2d-1.3.1-sources.classpath"/>
+    <path refid="library.gradle:_gdx-box2d-gwt-1.3.1-sources.classpath"/>
+    <path refid="library.gradle:_validation-api-1.0.0.ga-sources.classpath"/>
+    <path refid="library.gradle:_validation-api-1.0.0.ga.classpath"/>
+    <path refid="library.gradle:_json-20090211.classpath"/>
+    <path refid="library.gradle:_gwt-user-2.6.0.classpath"/>
+  </path>
+  
+  <path id="html.runtime.production.module.classpath">
+    <pathelement location="${html.output.dir}"/>
+    <path refid="core.runtime.production.module.classpath"/>
+    <path refid="library.gradle:_gdx-backend-gwt-1.3.1.classpath"/>
+    <path refid="library.gradle:_gdx-backend-gwt-1.3.1-sources.classpath"/>
+    <path refid="library.gradle:_gdx-1.3.1-sources.classpath"/>
+    <path refid="library.gradle:_gdx-box2d-1.3.1-sources.classpath"/>
+    <path refid="library.gradle:_gdx-box2d-gwt-1.3.1-sources.classpath"/>
+    <path refid="library.gradle:_gdx-1.3.1.classpath"/>
+    <path refid="library.gradle:_validation-api-1.0.0.ga-sources.classpath"/>
+    <path refid="library.gradle:_validation-api-1.0.0.ga.classpath"/>
+    <path refid="library.gradle:_json-20090211.classpath"/>
+    <path refid="library.gradle:_gwt-user-2.6.0.classpath"/>
+    <path refid="library.gradle:_gdx-box2d-1.3.1.classpath"/>
+    <path refid="library.gradle:_gwt-servlet-2.6.0.classpath"/>
+  </path>
+  
+  <path id="html.module.classpath">
+    <path refid="${module.jdk.classpath.html}"/>
+    <pathelement location="${html.output.dir}"/>
+    <pathelement location="${core.testoutput.dir}"/>
+    <pathelement location="${core.output.dir}"/>
+    <path refid="library.gradle:_gdx-1.3.1.classpath"/>
+    <path refid="library.gradle:_gdx-box2d-1.3.1.classpath"/>
+    <path refid="library.gradle:_gdx-backend-gwt-1.3.1.classpath"/>
+    <path refid="library.gradle:_gdx-backend-gwt-1.3.1-sources.classpath"/>
+    <path refid="library.gradle:_gdx-1.3.1-sources.classpath"/>
+    <path refid="library.gradle:_gdx-box2d-1.3.1-sources.classpath"/>
+    <path refid="library.gradle:_gdx-box2d-gwt-1.3.1-sources.classpath"/>
+    <path refid="library.gradle:_validation-api-1.0.0.ga-sources.classpath"/>
+    <path refid="library.gradle:_validation-api-1.0.0.ga.classpath"/>
+    <path refid="library.gradle:_json-20090211.classpath"/>
+    <path refid="library.gradle:_gwt-user-2.6.0.classpath"/>
+  </path>
+  
+  <path id="html.runtime.module.classpath">
+    <pathelement location="${html.testoutput.dir}"/>
+    <pathelement location="${html.output.dir}"/>
+    <path refid="core.runtime.module.classpath"/>
+    <path refid="library.gradle:_gdx-backend-gwt-1.3.1.classpath"/>
+    <path refid="library.gradle:_gdx-backend-gwt-1.3.1-sources.classpath"/>
+    <path refid="library.gradle:_gdx-1.3.1-sources.classpath"/>
+    <path refid="library.gradle:_gdx-box2d-1.3.1-sources.classpath"/>
+    <path refid="library.gradle:_gdx-box2d-gwt-1.3.1-sources.classpath"/>
+    <path refid="library.gradle:_gdx-1.3.1.classpath"/>
+    <path refid="library.gradle:_validation-api-1.0.0.ga-sources.classpath"/>
+    <path refid="library.gradle:_validation-api-1.0.0.ga.classpath"/>
+    <path refid="library.gradle:_json-20090211.classpath"/>
+    <path refid="library.gradle:_gwt-user-2.6.0.classpath"/>
+    <path refid="library.gradle:_gdx-box2d-1.3.1.classpath"/>
+    <path refid="library.gradle:_gwt-servlet-2.6.0.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.html">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.html">
+    <patternset refid="excluded.from.module.html"/>
+  </patternset>
+  
+  <path id="html.module.sourcepath">
+    <dirset dir="${module.html.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.html" depends="compile.module.html.production,compile.module.html.tests" description="Compile module html"/>
+  
+  <target name="compile.module.html.production" depends="register.custom.compilers,compile.module.core" description="Compile module html; production classes">
+    <mkdir dir="${html.output.dir}"/>
+    <javac2 destdir="${html.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.html}/javac">
+      <compilerarg line="${compiler.args.html}"/>
+      <bootclasspath refid="html.module.bootclasspath"/>
+      <classpath refid="html.module.production.classpath"/>
+      <src refid="html.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.html"/>
+    </javac2>
+    
+    <copy todir="${html.output.dir}">
+      <fileset dir="${module.html.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.html.tests" depends="register.custom.compilers,compile.module.html.production" description="compile module html; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.html" description="cleanup module">
+    <delete dir="${html.output.dir}"/>
+    <delete dir="${html.testoutput.dir}"/>
+  </target>
+</project>

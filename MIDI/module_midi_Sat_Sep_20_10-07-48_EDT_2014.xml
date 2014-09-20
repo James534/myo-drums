@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_midi" default="compile.module.midi">
+  <dirname property="module.midi.basedir" file="${ant.file.module_midi}"/>
+  
+  <property name="module.jdk.home.midi" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.midi" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.midi" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.midi" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+  
+  <property name="midi.output.dir" value="${module.midi.basedir}/build/classes/production/MIDI"/>
+  <property name="midi.testoutput.dir" value="${module.midi.basedir}/build/classes/test/MIDI"/>
+  
+  <path id="midi.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="midi.module.production.classpath">
+    <path refid="${module.jdk.classpath.midi}"/>
+  </path>
+  
+  <path id="midi.runtime.production.module.classpath">
+    <pathelement location="${midi.output.dir}"/>
+  </path>
+  
+  <path id="midi.module.classpath">
+    <path refid="${module.jdk.classpath.midi}"/>
+    <pathelement location="${midi.output.dir}"/>
+  </path>
+  
+  <path id="midi.runtime.module.classpath">
+    <pathelement location="${midi.testoutput.dir}"/>
+    <pathelement location="${midi.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.midi">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.midi">
+    <patternset refid="excluded.from.module.midi"/>
+  </patternset>
+  
+  
+  <target name="compile.module.midi" depends="compile.module.midi.production,compile.module.midi.tests" description="Compile module MIDI"/>
+  
+  <target name="compile.module.midi.production" depends="register.custom.compilers" description="Compile module MIDI; production classes"/>
+  
+  <target name="compile.module.midi.tests" depends="register.custom.compilers,compile.module.midi.production" description="compile module MIDI; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.midi" description="cleanup module">
+    <delete dir="${midi.output.dir}"/>
+    <delete dir="${midi.testoutput.dir}"/>
+  </target>
+</project>
