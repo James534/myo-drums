@@ -3,6 +3,9 @@ package MIDI_Package.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import MIDI_Package.MIDI_Main;
+import com.badlogic.gdx.utils.Array;
+
+import java.util.Random;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {

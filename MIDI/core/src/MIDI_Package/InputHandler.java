@@ -39,6 +39,18 @@ public class InputHandler implements InputProcessor{
             case (Input.Keys.D):
                 mainScreen.playSound(6);
                 break;
+            case (Input.Keys.C):
+                mainScreen.playSound(7);
+                break;
+            case (Input.Keys.I):
+                mainScreen.startRecord(true);
+                break;
+            case (Input.Keys.O):
+                mainScreen.startRecord(false);
+                break;
+            case (Input.Keys.P):
+                mainScreen.startPlayback();
+                break;
         }
         return true;
     }
