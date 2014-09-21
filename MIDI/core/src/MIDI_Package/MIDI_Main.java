@@ -1,5 +1,6 @@
 package MIDI_Package;
 
+import MIDI_Package.Screens.MainScreen;
 import MIDI_Package.Screens.SplashScreen;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
@@ -17,6 +18,6 @@ public class MIDI_Main extends Game {
 
 	@Override
 	public void create () {
-        setScreen (new SplashScreen());
+        setScreen (new MainScreen());
 	}
 }

@@ -3,6 +3,7 @@ package MIDI_Package.Screens;
 import MIDI_Package.InputHandler;
 import MIDI_Package.MIDI_Main;
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,8 +18,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
-
 import java.util.LinkedList;
+
+import java.io.IOException;
+import java.lang.Math;
+import com.leapmotion.leap.*;
+import com.leapmotion.leap.Gesture.State;
 
 /**
  * Created by James on 9/20/2014.
@@ -78,7 +83,7 @@ public class MainScreen implements Screen {
             final int n = i;
             images[i].addListener(new ClickListener() {
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    sounds[n].play();
+                    playSound(n);
                     return true;
                 }
             });
@@ -120,10 +125,16 @@ public class MainScreen implements Screen {
     private void update(){
         if (record){
             recording.add(-1);
-        }else if (playback && counter < recording.size()){
+            recordButton.setChecked(true);
+        }else if (!record){
+            recordButton.setChecked(false);
+        }
+        if (playback && counter < recording.size()){
+            System.out.println(counter);
             temp = recording.get(counter);
             if (temp != -1){
                 playSound(temp);
+                System.out.println("LKLK");
             }
             counter++;
             if (counter == recording.size()) {
@@ -139,13 +150,13 @@ public class MainScreen implements Screen {
         if (isTrue){
             recording.clear();
         }
+        System.out.println("Recording :" + record + recording.size());
     }
     public void startPlayback(){
         startRecord(false);
         playback = true;
         counter = 0;
     }
-
 
     private ImageButtonStyle generateStyle(String f1, String f2){
         Texture texture = new Texture(Gdx.files.internal(MIDI_Main.fileName + "Pictures/"+f1+".png"));
@@ -166,6 +177,7 @@ public class MainScreen implements Screen {
         sounds[id].play();
         images[id].toggle();
         if (record){
+            System.out.print("RECORD");
             recording.add(id);
         }
     }
