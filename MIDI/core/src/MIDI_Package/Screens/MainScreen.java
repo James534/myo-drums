@@ -7,20 +7,15 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-
-import javax.xml.soap.Text;
 
 /**
  * Created by James on 9/20/2014.
@@ -30,12 +25,8 @@ public class MainScreen implements Screen {
 
     private Skin skin;
     private Image background;
-    private ImageButton[] drums;
-    private Sound[] snare;
-    private ImageButton[] hihat;
-    private Sound[] hiHat;
-    private ImageButton baseDrum;
-    private Sound[] base;
+    private ImageButton[] images;       //crash cymbol, hightom, lowtom, ride cymbol
+    private Sound[] sounds;             //hihat, snare, basedrum
 
     private InputMultiplexer multiplexer;
     private InputHandler inputHandler;
@@ -48,69 +39,46 @@ public class MainScreen implements Screen {
         skin = new Skin(Gdx.files.internal(MIDI_Main.fileName + "uiskin.json"));
 
         //sounds
-        snare = new Sound[4];
-        hiHat = new Sound[4];
-        base = new Sound[4];
-        for (int i = 0; i < 4; i++){
-            snare[i] = Gdx.audio.newSound(Gdx.files.internal(MIDI_Main.fileName + "Sound/Snare"+(i+1)+".wav"));
-            hiHat[i] = Gdx.audio.newSound(Gdx.files.internal(MIDI_Main.fileName + "Sound/Hihat"+(i+1)+".wav"));
-            base[i] = Gdx.audio.newSound(Gdx.files.internal(MIDI_Main.fileName + "Sound/Base"+(i+1)+".wav"));
-        }
+        sounds = new Sound[7];
+        sounds[0] = Gdx.audio.newSound(Gdx.files.internal(MIDI_Main.fileName + "Sound/crashCymbal.wav"));
+        sounds[1] = Gdx.audio.newSound(Gdx.files.internal(MIDI_Main.fileName + "Sound/highTom.wav"));
+        sounds[2] = Gdx.audio.newSound(Gdx.files.internal(MIDI_Main.fileName + "Sound/lowTom.wav"));
+        sounds[3] = Gdx.audio.newSound(Gdx.files.internal(MIDI_Main.fileName + "Sound/rideCymbal.wav"));
+        sounds[4] = Gdx.audio.newSound(Gdx.files.internal(MIDI_Main.fileName + "Sound/Hihat.wav"));
+        sounds[5] = Gdx.audio.newSound(Gdx.files.internal(MIDI_Main.fileName + "Sound/Snare1.wav"));
+        sounds[6] = Gdx.audio.newSound(Gdx.files.internal(MIDI_Main.fileName + "Sound/Base1.wav"));
 
         //textures and stuff
-        Texture drum = new Texture(Gdx.files.internal(MIDI_Main.fileName + "Pictures/Drum0.png"));
-        TextureRegion drumsUp = new TextureRegion(drum);
-        drum  = new Texture(Gdx.files.internal(MIDI_Main.fileName + "Pictures/Drum1.png"));
-        TextureRegion drumsDown = new TextureRegion(drum);
-
-        //style
-        ImageButtonStyle style = new ImageButtonStyle(skin.get(ButtonStyle.class));
-        style.imageUp = new TextureRegionDrawable(drumsUp);
-        //style.imageDown = new TextureRegionDrawable(drumsDown);
-        style.imageChecked = new TextureRegionDrawable(drumsDown);
-
-        drums = new ImageButton[4];
-        for (int i = 0; i < drums.length; i++){
-            drums[i] = new ImageButton(style);
+        images = new ImageButton[7];
+        images[0] = new ImageButton(generateStyle("DrumS0", "DrumS1"));
+        images[1] = new ImageButton(generateStyle("DrumS0", "DrumS1"));
+        images[2] = new ImageButton(generateStyle("DrumS0", "DrumS1"));
+        images[3] = new ImageButton(generateStyle("DrumS0", "DrumS1"));
+        images[4] = new ImageButton(generateStyle("DrumS0", "DrumS1"));
+        images[5] = new ImageButton(generateStyle("DrumS0", "DrumS1"));
+        images[6] = new ImageButton(generateStyle("DrumS0", "DrumS1"));
+        for (int i = 0; i < images.length; i++) {
             final int n = i;
-            drums[i].addListener(new ClickListener(){
-                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                    snare[n].play();
-                    return true;
-                }
-            });
-        }
-
-        style = new ImageButtonStyle(skin.get(ButtonStyle.class));
-        Texture symbol = new Texture(Gdx.files.internal(MIDI_Main.fileName + "Symbol0.png"));
-        drumsUp = new TextureRegion(symbol);
-        style.imageUp = new TextureRegionDrawable(drumsUp);
-        symbol = new Texture(Gdx.files.internal(MIDI_Main.fileName + "Symbol1.png"));
-        drumsDown = new TextureRegion(symbol);
-        style.imageChecked = new TextureRegionDrawable(drumsDown);
-        hihat = new ImageButton[4];
-        for (int i = 0; i < 4; i++) {
-            hihat[i] = new ImageButton(style);
-            final int n = i;
-            hihat[i].addListener(new ClickListener() {
+            images[i].addListener(new ClickListener() {
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    hiHat[n].play();
+                    sounds[n].play();
                     return true;
                 }
             });
         }
 
-        drums[0].setPosition(50, 100);
-        drums[1].setPosition(350, 200);
-        drums[2].setPosition(650, 200);
-        drums[3].setPosition(950, 100);
+        images[0].setPosition(140, 400);
+        images[1].setPosition(390, 400);
+        images[2].setPosition(640, 400);
+        images[3].setPosition(890, 400);
+        images[4].setPosition(250, 150);
+        images[5].setPosition(600, 150);
+        images[6].setPosition(900, 150);
 
         stage.addActor(background);
-        stage.addActor(drums[0]);
-        stage.addActor(drums[1]);
-        stage.addActor(drums[2]);
-        stage.addActor(drums[3]);
-        stage.addActor(hihat[0]);
+        for (int i = 0; i < images.length; i++){
+            stage.addActor(images[i]);
+        }
 
         multiplexer = new InputMultiplexer();
         inputHandler = new InputHandler(this);
@@ -120,6 +88,7 @@ public class MainScreen implements Screen {
         Gdx.input.setInputProcessor(multiplexer);
     }
 
+    /*
     private int counter;
     private int delay = 7;
     private void update() {
@@ -146,30 +115,35 @@ public class MainScreen implements Screen {
             snare[0].play();
         }else if (counter == delay*15){
             hiHat[0].play();
-            counter = -1;
+            counter = 0;
         }
         counter++;
+    }*/
+
+    private ImageButtonStyle generateStyle(String f1, String f2){
+        Texture texture = new Texture(Gdx.files.internal(MIDI_Main.fileName + "Pictures/"+f1+".png"));
+        TextureRegion up = new TextureRegion(texture);
+        texture  = new Texture(Gdx.files.internal(MIDI_Main.fileName + "Pictures/"+f2+".png"));
+        TextureRegion down = new TextureRegion(texture);
+
+        //style
+        ImageButtonStyle style = new ImageButtonStyle(skin.get(ButtonStyle.class));
+        style.imageUp = new TextureRegionDrawable(up);
+        //style.imageDown = new TextureRegionDrawable(drumsDown);
+        style.imageChecked = new TextureRegionDrawable(down);
+        return style;
     }
 
     public void playSound(int id){
-        if (id < 0) return;
-        if (id < 4){
-            hiHat[id].play();
-            hihat[id].setChecked(true);
-        }else if (id < 8){
-            snare[id%4].play();
-            drums[id%4].setChecked(true);
-        }else if (id < 12){
-            base[id%4].play();
-        }
+        if (id < 0)return;
+        sounds[id].play();
+        images[id].toggle();
     }
 
     private void resetButtons(){
-        for (int i = 0; i < 4; i++){
-            if (drums[i].isChecked())
-                drums[i].toggle();
-            if (hihat[i].isChecked())
-                hihat[i].toggle();
+        for (int i = 0; i < images.length; i++){
+            if (images[i].isChecked())
+                images[i].toggle();
         }
     }
 
@@ -179,7 +153,7 @@ public class MainScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        update();
+        //update();
         Gdx.gl.glClearColor(0,0,0,1);               //sets color to black
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);   //clear the batch
         stage.act();
